@@ -19,6 +19,13 @@
         <el-table-column type="selection">
         </el-table-column>
         <el-table-column prop="name" label="姓名">
+          <template slot-scope="scope">
+            <el-tooltip effect="light" content="点击查看详细信息" placement="top-start">
+              <a @click="goToDetail(scope.row)">
+                <span>{{ scope.row.name }}</span>
+              </a>
+            </el-tooltip>
+          </template>
         </el-table-column>
         <el-table-column prop="age" label="年龄">
         </el-table-column>
@@ -188,14 +195,8 @@ export default {
       })
       this.getUserInfo()
     },
-    // 编辑操作
-    updateUser(row) {
-      this.userForm = row;
-      this.dialogTitle = "编辑用户";
-      this.showDialog = true;
-      this.$nextTick(() => {
-        this.$refs["userDialog"].showDialog = true;
-      });
+    goToDetail() {
+
     },
     handleSizeChange(val = 10) {
       // this.height = (val + 1) * 40
@@ -209,7 +210,7 @@ export default {
     //   this.$refs.userForm.resetFields();
     // },
     showResult(res) {
-      if (res.code === 200) {
+      if (res.code === '200') {
         this.$message({
           message: res.message,
           type: "success",
@@ -295,6 +296,15 @@ export default {
 .table-ca-btn:hover {
   background-color: #e3362d;
   color: #fff;
+}
+
+a {
+  color: #243ed2;
+}
+
+a:hover {
+  color: black;
+  font-weight: 700;
 }
 
 

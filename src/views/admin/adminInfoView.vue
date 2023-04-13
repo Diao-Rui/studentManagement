@@ -86,7 +86,7 @@ export default {
             }, 1000)
         },
         showResult(res) {
-            if (res.code === 200) {
+            if (res.code === '200') {
                 this.$message({
                     type: 'success',
                     message: res.message
