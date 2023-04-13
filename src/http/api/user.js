@@ -14,11 +14,17 @@ export const register = (data) => {
     data,
   });
 };
-export const delUser = (parms) => {
+export const updateUser = (data) => {
   return serviceAxios({
-    url: "/delUser",
+    url: "/updateUser",
+    method: "post",
+    data,
+  });
+};
+export const delUser = (id) => {
+  return serviceAxios({
+    url: `/delUser?id=${id}`,
     method: "get",
-    parms,
   });
 };
 export const findAllUser = () => {

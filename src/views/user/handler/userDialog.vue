@@ -3,7 +3,7 @@
         <el-dialog :title="dialogTitle" :visible.sync="showDialog" @close="closeDialog">
             <el-form :model="userForm" :rules="rules" ref="userForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="用户名" prop="username">
-                    <el-input v-model="userForm.username" placeholder="用户名"></el-input>
+                    <el-input v-model="userForm.username" :disabled="index !== 0" placeholder="用户名"></el-input>
                 </el-form-item>
                 <el-form-item label="用户密码" prop="password">
                     <el-input show-password :disabled="index !== 0" v-model="userForm.password" placeholder="密码"></el-input>
@@ -30,14 +30,14 @@
             <div slot="footer" class="dialog-footer">
                 <el-button @click="closeDialog">取 消</el-button>
                 <el-button @click="resetForm">重置</el-button>
-                <el-button type="primary" @click="addUser()">提交</el-button>
+                <el-button type="primary" @click="operateUser()">提交</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script>
-import { register } from '@/http/api/user'
+import { register, updateUser } from '@/http/api/user'
 
 export default {
     name: 'userDialog',
@@ -91,13 +91,19 @@ export default {
         resetForm() {
             this.$refs.userForm.resetFields();
         },
-        addUser() {
+        operateUser() {
             this.$refs.userForm.validate((valid) => {
                 if (valid) {
-                    delete this.userForm['id'];
-                    register(this.userForm).then((res) => {
-                        this.showResult(res)
-                    })
+                    if (this.index === 0) {
+                        delete this.userForm['id'];
+                        register(this.userForm).then((res) => {
+                            this.showResult(res)
+                        })
+                    } else {
+                        updateUser(this.userForm).then((res) => {
+                            this.showResult(res)
+                        })
+                    }
                     this.closeDialog()
                 } else {
                     console.log('error submit!!');

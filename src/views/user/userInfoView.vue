@@ -49,7 +49,7 @@
               <el-button class="table-ca-btn" size="small" type="text" icon="el-icon-setting"></el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="openDialog(scope.row)">修改</el-dropdown-item>
-                <el-dropdown-item @click.native="delUser(scope.row)">删除</el-dropdown-item>
+                <el-dropdown-item @click.native="delUser(scope.row.id)">删除</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -182,10 +182,10 @@ export default {
       localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
       this.getUserInfo()
     },
-    delUser(user) {
-      let index = this.userInfo.findIndex(item => item.id == user.id)
-      this.userInfo.splice(index, 1)
-      localStorage.setItem('userInfo', JSON.stringify(this.userInfo))
+    delUser(id) {
+      userApi.delUser(id).then((res) => {
+        this.showResult(res)
+      })
       this.getUserInfo()
     },
     // 编辑操作
@@ -205,9 +205,22 @@ export default {
       console.log(`当前页: ${val}`);
       // this.userList = this.userInfo.slice(this.pageSize * this.currentPage)
     },
-    resetForm() {
-      this.$refs.userForm.resetFields();
-    },
+    // resetForm() {
+    //   this.$refs.userForm.resetFields();
+    // },
+    showResult(res) {
+      if (res.code === 200) {
+        this.$message({
+          message: res.message,
+          type: "success",
+        });
+      } else {
+        this.$message({
+          message: res.message,
+          type: "danger",
+        });
+      }
+    }
   }
 }
 </script>
