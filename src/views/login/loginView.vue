@@ -49,7 +49,7 @@ export default {
             isLogin: false,
             // 用户名正则（4-16个字符数字、字母（大小写）、下划线）
             uPattern: /^[a-zA-Z0-9_-]{4,16}$/,
-            // 密码正则（6个字符以上，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符）
+            // 密码正则（6个字符以上，包括至少1个大写字母，1个小写字母，1个数字）
             pPattern: /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/,
             loginForm: {
                 username: '',
@@ -69,14 +69,12 @@ export default {
                 if (this.pPattern.test(this.loginForm.password)) {
                     login(this.loginForm).then((res) => {
                         showResult(res)
+                        if (res.code === '200') {
+                            setTimeout(() => {
+                                this.$router.push('/')
+                            }, 2000)
+                        }
                     })
-                    // this.$message({
-                    //     type: 'success',
-                    //     message: '合法登录'
-                    // });
-                    // setTimeout(() => {
-                    //     this.$router.push('/')
-                    // }, 2000)
                 } else {
                     this.$message({
                         type: 'error',
