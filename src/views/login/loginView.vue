@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { login } from '@/http/api/user';
+import { showResult } from '@/utils/showUtils'
 export default {
     name: 'LoginBox',
     data() {
@@ -65,13 +67,16 @@ export default {
             console.log(this.uPattern.exec(this.loginForm.username));
             if (this.uPattern.test(this.loginForm.username)) {
                 if (this.pPattern.test(this.loginForm.password)) {
-                    this.$message({
-                        type: 'success',
-                        message: '合法登录'
-                    });
-                    setTimeout(() => {
-                        this.$router.push('/')
-                    }, 2000)
+                    login(this.loginForm).then((res) => {
+                        showResult(res)
+                    })
+                    // this.$message({
+                    //     type: 'success',
+                    //     message: '合法登录'
+                    // });
+                    // setTimeout(() => {
+                    //     this.$router.push('/')
+                    // }, 2000)
                 } else {
                     this.$message({
                         type: 'error',

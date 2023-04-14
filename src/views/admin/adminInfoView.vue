@@ -46,6 +46,7 @@
 import tipsBar from '@/components/tipsBar.vue'
 import { findAllType, addType, delType } from '@/http/api/type'
 import { addOccupation, findAllOccupation, delOccupation } from '@/http/api/Occupation'
+import { showResult } from '@/utils/showUtils'
 export default {
     components: {
         tipsBar
@@ -85,19 +86,6 @@ export default {
                 this.OccupationLoading = false
             }, 1000)
         },
-        showResult(res) {
-            if (res.code === '200') {
-                this.$message({
-                    type: 'success',
-                    message: res.message
-                });
-            } else {
-                this.$message({
-                    type: 'danger',
-                    message: res.message
-                });
-            }
-        },
         handleClose(title, id, index) {
             this.$confirm('此操作将永久删除该' + title + ', 是否继续?', '提示', {
                 confirmButtonText: '确定',
@@ -109,13 +97,13 @@ export default {
                     delType({
                         id: id
                     }).then((res) => {
-                        this.showResult(res)
+                        showResult(res)
                     })
                 } else {
                     delOccupation({
                         id: id
                     }).then((res) => {
-                        this.showResult(res)
+                        showResult(res)
                     })
                 }
             })
@@ -131,13 +119,13 @@ export default {
                     addType({
                         type: value
                     }).then((res) => {
-                        this.showResult(res)
+                        showResult(res)
                     })
                 } else {
                     addOccupation({
                         occupation: value
                     }).then((res) => {
-                        this.showResult(res)
+                        showResult(res)
                     })
                 }
 

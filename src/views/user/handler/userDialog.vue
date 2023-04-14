@@ -38,7 +38,7 @@
 
 <script>
 import { register, updateUser } from '@/http/api/user'
-
+import { showResult } from '@/utils/showUtils'
 export default {
     name: 'userDialog',
     data() {
@@ -97,11 +97,11 @@ export default {
                     if (this.index === 0) {
                         delete this.userForm['id'];
                         register(this.userForm).then((res) => {
-                            this.showResult(res)
+                            showResult(res)
                         })
                     } else {
                         updateUser(this.userForm).then((res) => {
-                            this.showResult(res)
+                            showResult(res)
                         })
                     }
                     this.closeDialog()
@@ -111,20 +111,6 @@ export default {
                 }
             });
         },
-        showResult(res) {
-            if (res.code === '200') {
-                this.$message({
-                    message: res.message,
-                    type: "success",
-                });
-            } else {
-                this.$message({
-                    message: res.message,
-                    type: "danger",
-                });
-            }
-        }
-
     }
 }
 </script>

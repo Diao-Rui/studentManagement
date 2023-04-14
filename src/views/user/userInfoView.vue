@@ -86,6 +86,7 @@ import UserDialog from './handler/userDialog.vue'
 import tipsBar from '@/components/tipsBar.vue'
 import { findAllType } from '@/http/api/type'
 import { findAllOccupation } from '@/http/api/Occupation'
+import { showResult } from '@/utils/showUtils'
 export default {
   components: { UserDialog, tipsBar },
   data() {
@@ -191,7 +192,7 @@ export default {
     },
     delUser(id) {
       userApi.delUser(id).then((res) => {
-        this.showResult(res)
+        showResult(res)
       })
       this.getUserInfo()
     },
@@ -206,22 +207,6 @@ export default {
       console.log(`当前页: ${val}`);
       // this.userList = this.userInfo.slice(this.pageSize * this.currentPage)
     },
-    // resetForm() {
-    //   this.$refs.userForm.resetFields();
-    // },
-    showResult(res) {
-      if (res.code === '200') {
-        this.$message({
-          message: res.message,
-          type: "success",
-        });
-      } else {
-        this.$message({
-          message: res.message,
-          type: "danger",
-        });
-      }
-    }
   }
 }
 </script>
