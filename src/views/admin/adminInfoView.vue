@@ -70,7 +70,7 @@ export default {
         },
         getTypes() {
             this.typeLoading = true
-            setInterval(() => {
+            setTimeout(() => {
                 findAllType().then((res) => {
                     this.types = res
                 })
@@ -79,7 +79,7 @@ export default {
         },
         getOccupations() {
             this.OccupationLoading = true
-            setInterval(() => {
+            setTimeout(() => {
                 findAllOccupation().then((res) => {
                     this.occupations = res
                 })
@@ -98,12 +98,14 @@ export default {
                         id: id
                     }).then((res) => {
                         showResult(res)
+                        this.getTypes()
                     })
                 } else {
                     delOccupation({
                         id: id
                     }).then((res) => {
                         showResult(res)
+                        this.getOccupations()
                     })
                 }
             })
@@ -120,12 +122,14 @@ export default {
                         type: value
                     }).then((res) => {
                         showResult(res)
+                        this.getTypes()
                     })
                 } else {
                     addOccupation({
                         occupation: value
                     }).then((res) => {
                         showResult(res)
+                        this.getOccupations()
                     })
                 }
 

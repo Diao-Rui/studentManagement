@@ -64,13 +64,13 @@ export default {
     },
     methods: {
         login() {
-            console.log(this.uPattern.exec(this.loginForm.username));
             if (this.uPattern.test(this.loginForm.username)) {
                 if (this.pPattern.test(this.loginForm.password)) {
                     login(this.loginForm).then((res) => {
                         showResult(res)
                         if (res.code === '200') {
                             setTimeout(() => {
+                                localStorage.setItem('token', res.token)
                                 this.$router.push('/')
                             }, 2000)
                         }

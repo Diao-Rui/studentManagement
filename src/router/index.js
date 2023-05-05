@@ -60,21 +60,22 @@ const router = new VueRouter({
 // to 将要访问的路径
 // from 代表从哪个路径跳转而来
 // next 是个函数，表示放行 next() 放行  next('/login') 强制跳转
-// router.beforeEach((to, from, next) => {
-//     if (to.path.startsWith('/Login/Login')) {
-//         window.sessionStorage.removeItem('Token')
-//         next()
-//     } else {
-//         let user = window.sessionStorage.getItem('Token')
-//         if (!user) {
-//             next({
-//                 path: '/Login/Login'
-//             })
-//         } else {
-//             next()
-//         }
-//     }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.path.startsWith("/Login")) {
+    window.localStorage.removeItem("token");
+    next();
+  } else {
+    let token = window.localStorage.getItem("token");
+    console.log(token);
+    if (!token) {
+      next({
+        path: "/Login",
+      });
+    } else {
+      next();
+    }
+  }
+});
 
 const VueRouterPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(to) {
